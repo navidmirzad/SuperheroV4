@@ -1,5 +1,6 @@
 package com.example.superherov4.Service;
 
+import com.example.superherov4.dto.SuperheroDTO;
 import com.example.superherov4.model.Superhero;
 import com.example.superherov4.repositories.SuperheroRepository_DB;
 import org.springframework.stereotype.Service;
@@ -20,13 +21,15 @@ public class SuperheroService {
         return superheroRepository_db.getSuperheroes();
     }
 
+    public SuperheroDTO searchForSuperhero(String superheroName) {
+        return superheroRepository_db.searchForSuperhero(superheroName);
+    }
+
+
+
 
   /*  public Superhero createSuperhero(Superhero superhero) {
         return superheroRepository.createSuperhero(superhero);
-    }
-
-    public Superhero searchForSuperhero(String superheroName) {
-        return superheroRepository.searchForSuperhero(superheroName);
     }
 
     public Superhero editSuperhero(Superhero superhero) {

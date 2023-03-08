@@ -20,24 +20,14 @@ public class Superhero {
         this.strength = strength;
     }
 
-    public Superhero(int hero_id, String superheroName, String superPowers, String realName, int discoveryYear, String isHuman, int strength) {
-        this.hero_id = hero_id;
-        this.superheroName = superheroName;
-        this.superPowers = superPowers;
-        this.realName = realName;
-        this.discoveryYear = discoveryYear;
-        this.isHuman = isHuman;
-        this.strength = strength;
-    }
-
 
     public String getSuperheroName() {
         return superheroName;
     }
 
-    //  public String getSuperPowers() {
-    //    return superPowers;
-    // }
+      public String getSuperPowers() {
+        return superPowers;
+     }
 
     public String getRealName() {
         return realName;
@@ -59,9 +49,9 @@ public class Superhero {
         this.superheroName = superheroName;
     }
 
-    // public void setSuperPowers(String superPowers) {
-    //    this.superPowers = superPowers;
-    // }
+     public void setSuperPowers(String superPowers) {
+        this.superPowers = superPowers;
+     }
 
     public void setRealName(String realName) {
         this.realName = realName;
@@ -81,8 +71,8 @@ public class Superhero {
 
     public String toString() {
         return "\n" + "--------------------" + "\n" + "SUPERHERO #" + "\n" + "--------------------"
-                + "\n" + "Superhero name: " + superheroName + "\n" + "Super powers: "
-                + "Real name: " + realName + "\n"
+                + "\n" + "Superhero name: " + superheroName + "\n" + "Super powers: " +
+                superPowers + "\n" + "Real name: " + realName + "\n"
                 + "Year created: " + discoveryYear + "\n" +
                 "Is human? " + isHuman + "\n" + "Strength: " + strength + "\n";
     }
