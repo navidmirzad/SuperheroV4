@@ -1,13 +1,13 @@
 package com.example.superherov4.dto;
 
-public class superheroPowerCountDTO {
+public class SuperheroPowerCountDTO {
 
     private int hero_id;
     private String superheroName;
     private String realName;
     private int superheroPowerCount;
 
-    public superheroPowerCountDTO(int hero_id, String superheroName, String realName, int superheroPowerCount) {
+    public SuperheroPowerCountDTO(int hero_id, String superheroName, String realName, int superheroPowerCount) {
         this.hero_id = hero_id;
         this.superheroName = superheroName;
         this.realName = realName;

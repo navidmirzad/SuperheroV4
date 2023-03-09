@@ -5,18 +5,16 @@ public class SuperheroDTO {
     private int hero_id;
     private String superheroName;
     private String realName;
-    private int power_id;
     private int discoveryYear;
     private String isHuman;
     private int strength;
     private int city_id;
 
-    public SuperheroDTO(int hero_id, String superheroName, String realName, int power_id,
+    public SuperheroDTO(int hero_id, String superheroName, String realName,
                         int discoveryYear, String isHuman, int strength, int city_id) {
         this.hero_id = hero_id;
         this.superheroName = superheroName;
         this.realName = realName;
-        this.power_id = power_id;
         this.discoveryYear = discoveryYear;
         this.isHuman = isHuman;
         this.strength = strength;
@@ -34,10 +32,6 @@ public class SuperheroDTO {
 
     public String getRealName() {
         return realName;
-    }
-
-    public int getPower_id() {
-        return power_id;
     }
 
     public int getDiscoveryYear() {

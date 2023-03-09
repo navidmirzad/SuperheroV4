@@ -2,6 +2,7 @@ package com.example.superherov4.controller;
 
 import com.example.superherov4.Service.SuperheroService;
 import com.example.superherov4.dto.SuperheroDTO;
+import com.example.superherov4.dto.SuperheroPowerCountDTO;
 import com.example.superherov4.model.Superhero;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,11 @@ public class SuperheroController {
         return new ResponseEntity<>(superhero, HttpStatus.OK);
     }
 
+    @GetMapping("/superpower/count")
+    public ResponseEntity<List<SuperheroPowerCountDTO>> getSuperheroPowerCount() {
+        List superheroPowerCount = superheroService.getSuperheroPowerCount();
+        return new ResponseEntity<List<SuperheroPowerCountDTO>>(superheroPowerCount, HttpStatus.OK);
+    }
 
 /*
 
