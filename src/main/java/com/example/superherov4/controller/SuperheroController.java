@@ -1,7 +1,9 @@
 package com.example.superherov4.controller;
 
 import com.example.superherov4.Service.SuperheroService;
+import com.example.superherov4.dto.SuperheroCityDTO;
 import com.example.superherov4.dto.SuperheroDTO;
+import com.example.superherov4.dto.SuperheroNamePowerDTO;
 import com.example.superherov4.dto.SuperheroPowerCountDTO;
 import com.example.superherov4.model.Superhero;
 import org.springframework.http.HttpStatus;
@@ -39,7 +41,20 @@ public class SuperheroController {
         return new ResponseEntity<List<SuperheroPowerCountDTO>>(superheroPowerCount, HttpStatus.OK);
     }
 
-/*
+    @GetMapping("/superpower")
+    public ResponseEntity<List<SuperheroNamePowerDTO>> getSuperheroNamePower() {
+        List superheroPowerName = superheroService.superheroNamePower();
+        return new ResponseEntity<List<SuperheroNamePowerDTO>>(superheroPowerName, HttpStatus.OK);
+    }
+
+    @GetMapping("/city/{cityName}")
+    public ResponseEntity<List<SuperheroCityDTO>> getSuperheroCity(@PathVariable String cityName) {
+        List<SuperheroCityDTO> superheroCity = superheroService.getSuperheroCity(cityName);
+        return new ResponseEntity<>(superheroCity, HttpStatus.OK);
+    }
+
+
+    /*
 
 
     @PostMapping("/create/")

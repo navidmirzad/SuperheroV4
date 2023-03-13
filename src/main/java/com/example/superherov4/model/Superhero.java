@@ -10,7 +10,6 @@ public class Superhero {
     private String isHuman;      // TODO: make boolean
     private int strength;
 
-
     public Superhero(int hero_id, String superheroName, String realName, int discoveryYear, String isHuman, int strength) {
         this.hero_id = hero_id;
         this.superheroName = superheroName;
@@ -44,6 +43,7 @@ public class Superhero {
     public double getStrength() {
         return strength;
     }
+
 
     public void setSuperheroName(String superheroName) {
         this.superheroName = superheroName;

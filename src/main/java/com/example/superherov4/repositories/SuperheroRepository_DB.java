@@ -1,6 +1,8 @@
 package com.example.superherov4.repositories;
 
+import com.example.superherov4.dto.SuperheroCityDTO;
 import com.example.superherov4.dto.SuperheroDTO;
+import com.example.superherov4.dto.SuperheroNamePowerDTO;
 import com.example.superherov4.dto.SuperheroPowerCountDTO;
 import com.example.superherov4.model.Superhero;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -40,7 +43,7 @@ public class SuperheroRepository_DB implements IRepository {
             }
             return superheroes;
 
-            } catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -63,10 +66,11 @@ public class SuperheroRepository_DB implements IRepository {
                 String isHuman = rs.getString("isHuman");
                 int strength = rs.getInt("strength");
                 int city_id = rs.getInt("city_id");
-                superheroByName = new SuperheroDTO (hero_id,superheroNameColumn, realName,
+                superheroByName = new SuperheroDTO(hero_id, superheroNameColumn, realName,
                         discoveryYear, isHuman, strength, city_id);
 
-            } return superheroByName;
+            }
+            return superheroByName;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -77,8 +81,7 @@ public class SuperheroRepository_DB implements IRepository {
     public List<SuperheroPowerCountDTO> getSuperheroPowerCount() {
 
         List<SuperheroPowerCountDTO> superheroPowerCount = new ArrayList<>();
-
-        try (Connection con = DriverManager.getConnection(db_url, uid, pwd )) {
+        try (Connection con = DriverManager.getConnection(db_url, uid, pwd)) {
 
             String SQL = "SELECT hero_id, superheroName, realName, COUNT(*) AS superpowerCount \n" +
                     "FROM superhero \n" +
@@ -102,6 +105,60 @@ public class SuperheroRepository_DB implements IRepository {
         }
     }
 
+
+    public List<SuperheroNamePowerDTO> getSuperheroNameAndPower() {
+        List<SuperheroNamePowerDTO> superheroNamePower = new ArrayList<>();
+
+        try (Connection con = DriverManager.getConnection(db_url, uid, pwd)) {
+
+            String SQL = "SELECT s.hero_id, s.superheroName, s.realName, GROUP_CONCAT(COALESCE(sp.superpower, '') SEPARATOR ', ') AS superpowers\n" +
+                    "FROM superhero s\n" +
+                    "LEFT JOIN superpowerRelation spr ON s.hero_id = spr.hero_id\n" +
+                    "LEFT JOIN superpower sp ON spr.power_id = sp.power_id\n" +
+                    "GROUP BY s.hero_id, s.superheroName, s.realName;\n";
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(SQL);
+
+            while (rs.next()) {
+                String superheroName = rs.getString("superheroName");
+                String realName = rs.getString("realName");
+                List<String> superpowers = Arrays.asList(rs.getString("superpowers").split(","));
+                superheroNamePower.add(new SuperheroNamePowerDTO(superheroName, realName, superpowers));
+            }
+
+            return superheroNamePower;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public List<SuperheroCityDTO> getSuperheroCity(String cityName) {
+        List<SuperheroCityDTO> superheroCity = new ArrayList<>();
+
+        try (Connection con = DriverManager.getConnection(db_url, uid, pwd)) {
+
+            String SQL = "SELECT s.superheroName, s.realName, c.cityName\n" +
+                    "FROM superhero s\n" +
+                    "INNER JOIN city c ON s.city_id = c.city_id\n" +
+                    "WHERE c.cityName = ?\n" +
+                    "GROUP BY s.superheroName, s.realName, c.cityName;\n";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setString(1, cityName);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                superheroCity.add(new SuperheroCityDTO(rs.getString("superheroName"),
+                        rs.getString("realName"),
+                        rs.getString("cityName")));
+            }
+            return superheroCity;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 }
